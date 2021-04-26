@@ -18,32 +18,16 @@
   </div>
 
   <script>
-    // Event Listener
-    document.getElementById('btn').addEventListener('click', getJoke);
+    document.getElementById('btn').addEventListener('click', getJoke)
 
-    // Get Joke
     function getJoke() {
-      // Create a new XMLHttpRequest 
-      const xhr = new XMLHttpRequest();
-      // Open Request
-      xhr.open('GET','https://api.chucknorris.io/jokes/random', true);
-
-      // Deal with data
-      xhr.onload = function() {
-        // Check the HTTP Status
-        if(this.status === 200) {
-          let data = JSON.parse(this.responseText);
-          let joke = data.value;
-          // Add Joke
+      fetch('https://api.chucknorris.io/jokes/random')
+        .then(res=> res.json())
+        .then(data=> {
+          const joke = data.value;
           document.getElementById('joke').innerHTML = joke;
-        } else {
-          console.log('Something went Wrong!');
-        }
-      }
-      // Send request
-      xhr.send();
+        });
     }
-
   </script>
 </body>
 </html>
