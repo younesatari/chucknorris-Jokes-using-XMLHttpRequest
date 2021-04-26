@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>Chucknorris Jokes</title>
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta/css/bootstrap.min.css" integrity="sha384-/Y6pD6FV/Vv2HJnA6t+vslU6fwYXjCFtcEpHbNJ0lyAFsXTsjBbfaDjzALeQsN6M" crossorigin="anonymous">
+  <style>
+    #btn {cursor: pointer}
+  </style>
+</head>
+<body>
+  <div class="container text-center">
+    <h2 class="display-5 mt-4 mb-5">Chucknorris Jokes</h2>
+    <button id="btn" class="btn-outline-success mb-5 py-1 px-3">Get random joke</button>
+    <div id="joke" class="lead"></div>
+  </div>
+
+  <script>
+    // Event Listener
+    document.getElementById('btn').addEventListener('click', getJoke);
+
+    // Get Joke
+    function getJoke() {
+      // Create a new XMLHttpRequest 
+      const xhr = new XMLHttpRequest();
+      // Open Request
+      xhr.open('GET','https://api.chucknorris.io/jokes/random', true);
+
+      // Deal with data
+      xhr.onload = function() {
+        // Check the HTTP Status
+        if(this.status === 200) {
+          let data = JSON.parse(this.responseText);
+          let joke = data.value;
+          // Add Joke
+          document.getElementById('joke').innerHTML = joke;
+        } else {
+          console.log('Something went Wrong!');
+        }
+      }
+      // Send request
+      xhr.send();
+    }
+
+  </script>
+</body>
+</html>
